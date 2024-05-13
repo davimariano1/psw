@@ -45,7 +45,7 @@ def login_view(request):
         user = auth.authenticate(request, username=username, password=senha)
         if user:
             auth.login(request, user)
-            return redirect('/pacientes/home/')
+            return redirect('/paciente/home/')
         messages.add_message(request, constants.ERROR, "Usuário ou senha inválido!")
         return redirect('/usuarios/login')
     
