@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.messages import constants
-from .models import Especialidades, DadosMedico, is_medico, DatasAbertas
+from .models import Especialidades, DadosMedico, is_medico, DatasAbertas, is_medico
 from datetime import datetime, timedelta
 from paciente.models import Consulta
 
@@ -14,7 +14,7 @@ def cadastro_medico(request):
 
     if request.method == "GET":
         especialidade = Especialidades.objects.all()
-        return render(request, 'cadastro_medico.html', {'especialidade': especialidade})
+        return render(request, 'cadastro_medico.html', {'especialidade': especialidade, 'is_medico': is_medico(request.user)})
     
     elif request.method == "POST":
         crm = request.POST.get('crm')
@@ -54,7 +54,7 @@ def abrir_horario(request):
     if request.method == 'GET':
         dados_medicos = DadosMedico.objects.get(user=request.user)
         datas_abertas = DatasAbertas.objects.filter(user=request.user)
-        return render(request, 'abrir_horario.html', {'dados_medicos': dados_medicos, 'datas_abertas': datas_abertas})
+        return render(request, 'abrir_horario.html', {'dados_medicos': dados_medicos, 'datas_abertas': datas_abertas, 'is_medico': is_medico(request.user)})
     
     elif request.method == 'POST':
         data = request.POST.get('data')
@@ -79,4 +79,4 @@ def consultas_medico(request):
     hoje = datetime.now().date()
     consultas_hoje = Consulta.objects.filter(data_aberta__user=request.user).filter(data_aberta__data__gte=hoje).filter(data_aberta__data__lt=hoje + timedelta(days=1))
     consultas_restantes = Consulta.objects.exclude(id__in=consultas_hoje.values('id'))
-    return render(request, 'consultas_medico.html', {'consultas_hoje': consultas_hoje, 'consultas_restantes': consultas_restantes})
+    return render(request, 'consultas_medico.html', {'consultas_hoje': consultas_hoje, 'consultas_restantes': consultas_restantes, 'is_medico': is_medico(request.user)})
