@@ -28,7 +28,7 @@
             </div>
         {% elif consulta.status == 'I' %}
             <div class="alert alert-primary" role="alert">
-                Consulta inicializada, acesse o link imediatamente!
+                Consulta iniciada, acesse o link imediatamente!
             </div>
         {% endif %}
 
@@ -46,33 +46,34 @@
                 <br>
                 <div class="row">
                     <div class="col-md">
-                        
-                        <p><i class="color-dark bi bi-check-circle-fill"></i> Consulta agendada</p>
+                        <p><i class="{% if consulta.status == 'A' %}color-dark{% endif %} bi bi-check-circle-fill"></i> Consulta Agendada</p>
                     </div>
                     <div class="col-md">
-                        <p><i class=" bi bi-check-circle-fill"></i> Consulta realizada</p>
+                        <p><i class="{% if consulta.status == 'F' %}color-dark{% endif %} bi bi-check-circle-fill"></i> Consulta Finalizada</p>
                     </div>
                     <div class="col-md">
-                        <p><i class="bi bi-check-circle-fill"></i> Consulta Avaliada</p>
+                        <p><i class="bi bi-check-circle-fill"></i>Consulta Avaliada</p>
                     </div>
                 </div>
                 <hr>
                 <h3 class="p-bold">Detalhes da consulta</h3>
-                <p style="font-size:20px"><i class="bi bi-calendar3 color-dark"></i>&nbsp {{consulta.data_aberta.data}}</p>
-                <p style="font-size:20px"><i class="bi bi-tag-fill color-dark"></i></i>&nbsp R$ {{dado_medico.valor_consulta}}</p>
+                <p style="font-size:20px"><i class="bi bi-calendar3 color-dark"></i>&nbsp {{ consulta.data_aberta.data }}</p>
+                <p style="font-size:20px"><i class="bi bi-tag-fill color-dark"></i></i>&nbsp R$ {{ dado_medico.valor_consulta }}</p>
                 <a style="cursor: auto;" class="btn btn-dark-color-outline btn-lg">Adicione em seu calendário!</a>
                 <hr>
                 <h3 class="p-bold">Como acessar ?</h3>
-                <p>No horário da consulta acesse o link disponível abaixo</p>
+                <p>No horário da consulta acesse o link disponível abaixo: </p>
 
-                
-                <a href="#" class="btn btn-success btn-dark-color btn-lg disabled" >Acessar consulta</a>
-
+                {% if consulta.status == 'I' and consulta.link %}
+                    <a href="{{ consulta.link }}" class="btn btn-success btn-dark-color btn-lg" >Acessar consulta</a>
+                {% endif %}
                 
                 <hr>
-                <h3 class="p-bold">Meus documentos</h3>
+                <h3 class="p-bold">Meus documentos:</h3>
                 <br>
-    
+                {% for documento in documentos %}
+                    <a href='{{ documento.documento.url }}' class='badge bg-secondary'><p>{{ documento.titulo }}</p></a>
+                {% endfor %}
                 <br>
                 <br>
                 <br>

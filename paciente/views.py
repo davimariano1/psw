@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from medico.models import DadosMedico, Especialidades, DatasAbertas, is_medico
-from paciente.models import Consulta
+from paciente.models import Consulta, Documento
 from datetime import datetime
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -47,6 +47,7 @@ def consulta(request, id_consulta):
     if request.method == 'GET':
         consulta = Consulta.objects.get(id=id_consulta)
         dado_medico = DadosMedico.objects.get(user=consulta.data_aberta.user)
+        documentos = Documento.objects.filter(consulta=id_consulta)
         print(consulta.paciente)
         print(dado_medico.crm)
-        return render(request, 'consulta.html', {'consulta': consulta, 'dados_medico': dado_medico})
+        return render(request, 'consulta.html', {'consulta': consulta, 'dado_medico': dado_medico, 'documentos': documentos})
