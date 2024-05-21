@@ -15,16 +15,16 @@
 {% include 'partials/navbar.html' %}
     <div class="container">
         <br>
-        <h2><span class="color-dark">Suas consultas</span></h2>
+        <h4><span class="color-dark">Suas consultas</span></h4>
         <div class="row">
             <div class="col-md">
-                <input type="text" name="especialidades" id="" class="form-control shadow-main-color" placeholder="Especialidades médias">
+                <input type="text" name="especialidades" id="" class="form-control shadow-main-color" placeholder="Especialidades médicas">
             </div>
             <div class="col-md">
                 <input type="date" name="data" id="" class="form-control shadow-main-color" placeholder="Data da consulta">
             </div>
             <div class="col-md">
-                <input type="submit" value="Filtrar" class="btn btn-dark-color-outline">
+                <input type="submit" value="Buscar" class="btn btn-dark-color-outline">
             </div>
         </div>
         <br>
@@ -37,10 +37,10 @@
                     <th scope="col">Data</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="table table-striped">
                     {% for consulta in minhas_consultas  %}
                         <tr>
-                            <td><a href="{% url 'consulta' consulta.id %}">Dr(a). {{ consulta.data_aberta.user }}</a></td>
+                            <td><a href="{% url 'consulta' consulta.id %}">Dr(a). {{dado_medico.name}} - {{ consulta.data_aberta.user }}</a></td>
                             <td>{{ consulta.get_status_display }}</td>
                             <td>{{ consulta.data_aberta.data }}</td>
                         </tr>

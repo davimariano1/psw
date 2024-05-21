@@ -119,7 +119,7 @@ def finalizar_consulta(request, id_consulta):
         messages.add_message(request, constants.ERROR, "Você não é o médico cadastrado para essa consulta!")
         return redirect('/usuarios/home')
     
-    consulta.status('F')
+    consulta.status = 'F'
     consulta.save()
     return redirect(f'/medico/consulta_area_medico/{id_consulta}')
 
