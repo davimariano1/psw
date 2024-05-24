@@ -39,11 +39,16 @@
                 </thead>
                 <tbody class="table table-striped">
                     {% for consulta in minhas_consultas  %}
-                        <tr>
-                            <td><a href="{% url 'consulta' consulta.id %}">Dr(a). {{dado_medico.name}} - {{ consulta.data_aberta.user }}</a></td>
-                            <td>{{ consulta.get_status_display }}</td>
-                            <td>{{ consulta.data_aberta.data }}</td>
-                        </tr>
+                        {% for medico in dados_medicos %}
+                        {{ consulta.data_aberta.user.id }} {{ medico.user.id }} |
+                            {% if consulta.data_aberta.user.id == medico.user.id %}
+                                <tr>
+                                    <td><a href="{% url 'consulta' consulta.id %}">Dr(a).  {{ medico.nome }} </a></td>
+                                    <td>{{ consulta.get_status_display }}</td>
+                                    <td>{{ consulta.data_aberta.data }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
                 </tbody>
               </table>

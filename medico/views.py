@@ -89,7 +89,6 @@ def consulta_area_medico(request, id_consulta):
     if request.method == 'GET':
         consulta = Consulta.objects.get(id=id_consulta)
         documentos = Documento.objects.filter(consulta=consulta)
-        print("redirecionando para consulta area médico - 7")
         return render(request, 'consulta_area_medico.html', {'consulta': consulta, 'documentos': documentos})
     
     elif request.method == 'POST':

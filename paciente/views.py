@@ -41,8 +41,8 @@ def agendar_horario(request, id_data_aberta):
 
 def minhas_consultas(request):
     minhas_consultas = Consulta.objects.filter(paciente=request.user).filter(data_aberta__data__gte=datetime.now())
-    dado_medico = DadosMedico.objects.filter(nome=minhas_consultas.data_aberta__user__)
-    return render(request, 'minhas_consultas.html', {'minhas_consultas': minhas_consultas, 'is_medico': is_medico(request.user)})
+    dados_medicos = DadosMedico.objects.all()
+    return render(request, 'minhas_consultas.html', {'minhas_consultas': minhas_consultas, 'is_medico': is_medico(request.user), 'dados_medicos': dados_medicos})
 
 def consulta(request, id_consulta):
     if request.method == 'GET':
